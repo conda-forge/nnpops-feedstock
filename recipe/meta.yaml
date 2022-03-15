@@ -1,5 +1,7 @@
 {% set name = "nnpops" %}
 {% set version = "0.2" %}
+# see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
+{% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
 package:
   name: {{ name|lower }}
@@ -11,7 +13,7 @@ source:
 
 build:
   skip: true  # [(not linux) or (cuda_compiler_version in (undefined, 'None'))]
-  number: 0
+  number: 1
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
@@ -27,17 +29,26 @@ requirements:
     - make
     - cmake
   host:
-    - python 
-    - pytorch 1.10.0
-    - pytorch =*=*cuda*
+    - python
+    - pytorch
+    - pytorch =*={{ torch_proc_type }}*
     - torchani
     - mdtraj
     - pytest
   run:
     - python
-    - {{ pin_compatible("pytorch", max_pin="x.x.x") }}
-    - pytorch =*=*cuda*
     - torchani
+  run_constrained:
+    # 2022/02/05 hmaarrfk
+    # While conda packaging seems to allow us to specify
+    # constraints on the same package in different lines
+    # the resulting package doesn't have the ability to
+    # be specified in multiples lines
+    # This makes it tricky to use run_exports
+    # we add the GPU constraint in the run_constrained
+    # to allow us to have "two" constraints on the
+    # running package
+    - pytorch =*={{ torch_proc_type }}*
 
 test:
   imports:
