@@ -12,8 +12,8 @@ source:
   sha256: 0d770b1b6d48a6d76e6dce9b3da996da27a3767e6a0548bb5921d49c65adb635
 
 build:
-  skip: true  # [(not linux) or (cuda_compiler_version in (undefined, 'None'))]
-  number: 1
+  skip: true  # [(not linux) or (cuda_compiler_version in (undefined, 'None', "10.2"))]
+  number: 2
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
@@ -24,7 +24,7 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}
-    - {{ compiler('cuda') }}  # [cuda_compiler_version not in (undefined, 'None')]
+    - {{ compiler('cuda') }}  # [cuda_compiler_version not in (undefined, 'None', 10.2)]
     - sysroot_linux-64  2.17  # [linux64]
     - make
     - cmake
