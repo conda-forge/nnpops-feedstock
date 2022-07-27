@@ -23,8 +23,8 @@ build:
     - '*/libcuda.*'  # [linux64]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
-  script: build_linux.sh  # [linux]
-  script: build_osx.sh  # [osx]
+  script: build_linux.sh  # [not osx]
+  script: build_osx.sh  # [not linux]
 requirements:
   build:
     - {{ compiler('cxx') }}
