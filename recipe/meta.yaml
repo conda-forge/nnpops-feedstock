@@ -12,7 +12,9 @@ source:
   sha256: 0d770b1b6d48a6d76e6dce9b3da996da27a3767e6a0548bb5921d49c65adb635
 
 build:
-  skip: true  # [win or cuda_compiler_version == "10.2"]
+  #skip: true  # [win or cuda_compiler_version == "10.2"]
+  # remove once things are working
+  skip: true  # [linux]
   number: 6
   rpaths:
     - lib/
@@ -21,7 +23,7 @@ build:
     - '*/libcuda.*'  # [linux64]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
-  script: build.sh  # [linux]
+  script: build_linux.sh  # [linux]
   script: build_osx.sh  # [osx]
 requirements:
   build:
