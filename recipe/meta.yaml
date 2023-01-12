@@ -1,5 +1,5 @@
 {% set name = "nnpops" %}
-{% set version = "0.2" %}
+{% set version = "0.3" %}
 # see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
 {% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
@@ -13,7 +13,7 @@ source:
 
 build:
   skip: true  # [(not linux) or (cuda_compiler_version in (undefined, 'None', "10.2"))]
-  number: 5
+  number: 0
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
