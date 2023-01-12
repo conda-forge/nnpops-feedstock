@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://github.com/openmm/NNPOps/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 0d770b1b6d48a6d76e6dce9b3da996da27a3767e6a0548bb5921d49c65adb635
+  sha256: 6ed12eca1f9b3ad6e5bdd00a50eeac40e61ef1ed8136f0dd9e6e08c30beac360
 
 build:
   skip: true  # [(not linux) or (cuda_compiler_version in (undefined, 'None', "10.2"))]
