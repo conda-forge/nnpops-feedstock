@@ -13,7 +13,7 @@ source:
 
 build:
   skip: true  # [(not linux) or (cuda_compiler_version in (undefined, 'None', "10.2"))]
-  number: 0
+  number: 1
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
