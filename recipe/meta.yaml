@@ -1,10 +1,9 @@
-{% set name = "nnpops" %}
 {% set version = "0.3" %}
 # see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
 {% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
 package:
-  name: {{ name|lower }}
+  name: nnpops
   version: {{ version }}
 
 source:
