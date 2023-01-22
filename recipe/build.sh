@@ -7,7 +7,10 @@ rm -rf build || true
 # function for facilitate version comparison; cf. https://stackoverflow.com/a/37939589
 function version2int { echo "$@" | awk -F. '{ printf("%d%02d\n", $1, $2); }'; }
 
-# adapted from https://github.com/conda-forge/faiss-split-feedstock/blob/master/recipe/build-lib.sh
+CMAKE_FLAGS="${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release -DPython_EXECUTABLE=${PYTHON}"
+CMAKE_FLAGS+=" -DTorch_DIR=${SP_DIR}/torch/share/cmake/Torch"
+
+# adapted from https://github.com/conda-forge/faiss-split-feedstock/blob/main/recipe/build-lib.sh
 declare -a CUDA_CONFIG_ARGS
 if [ ${cuda_compiler_version} != "None" ]; then
     # the following are all the x86-relevant gpu arches; for building aarch64-packages, add: 53, 62, 72
@@ -41,11 +44,11 @@ if [ ${cuda_compiler_version} != "None" ]; then
     )
     ## cmake does not generate output for the call below; echo some info
     echo "Set up extra cmake-args: CUDA_CONFIG_ARGS=${CUDA_CONFIG_ARGS+"${CUDA_CONFIG_ARGS[@]}"}"
-fi
 
-CMAKE_FLAGS="${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release -DPython_EXECUTABLE=${PYTHON}"
-CMAKE_FLAGS+=" -DTorch_DIR=${SP_DIR}/torch/share/cmake/Torch"
-#CMAKE_FLAGS+=" -DENABLE_CUDA=OFF"
+    CMAKE_FLAGS+=" ${CUDA_CONFIG_ARGS}"
+else
+    CMAKE_FLAGS+=" -DENABLE_CUDA=OFF"
+fi
 
 mkdir build && cd build
 cmake ${CMAKE_FLAGS} ${SRC_DIR}
