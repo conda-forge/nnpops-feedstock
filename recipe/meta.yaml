@@ -1,4 +1,4 @@
-{% set version = "0.3" %}
+{% set version = "0.4" %}
 # see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
 {% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
@@ -8,21 +8,25 @@ package:
 
 source:
   url: https://github.com/openmm/NNPOps/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 6ed12eca1f9b3ad6e5bdd00a50eeac40e61ef1ed8136f0dd9e6e08c30beac360
+  sha256: 81857fbb2ce3092243987a5cf2db4cb52352ab2f086d266ddf59edfebf0e92f5
+  patches:
+    # Remove when https://github.com/openmm/NNPOps/pull/88 has been released
+    - 0001-Update-test-tolerance.patch
+    - 0002-Update-the-test-tolerance-again.patch
 
 build:
   skip: true  # [not linux]
   # as of pytorch 1.13, conda-forge only builds for CUDA 11.2+, see
   # https://github.com/conda-forge/conda-forge-pinning-feedstock/issues/3491
   skip: true  # [cuda_compiler_version not in ("None", "11.2")]
-  number: 2
+  number: 0
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
   missing_dso_whitelist:
     - '*/libcuda.*'  # [linux64]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
 
 requirements:
   build:
@@ -56,7 +60,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: "High performance implementations of operations used in Neural Network Potentials"
+  summary: High performance implementations of operations used in Neural Network Potentials
 
 extra:
   recipe-maintainers:
