@@ -11,6 +11,7 @@ source:
   sha256: 81857fbb2ce3092243987a5cf2db4cb52352ab2f086d266ddf59edfebf0e92f5
   patches:
     - 0001-Update-test-tolerance.patch
+    - 0002-Update-the-test-tolerance-again.patch
 
 build:
   skip: true  # [not linux]
