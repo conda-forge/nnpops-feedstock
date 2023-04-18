@@ -9,10 +9,6 @@ package:
 source:
   url: https://github.com/openmm/NNPOps/archive/refs/tags/v{{ version }}.tar.gz
   sha256: 1e9d5d631c852593e9e07a17db576187e5e8f50e7ab2c1e6a79b3e77dae06048
-  patches:
-    # Remove when https://github.com/openmm/NNPOps/pull/88 has been released
-    - 0001-Update-test-tolerance.patch
-    - 0002-Update-the-test-tolerance-again.patch
 
 build:
   skip: true  # [not linux]
