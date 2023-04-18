@@ -199,4 +199,5 @@ Feedstock Maintainers
 
 * [@h-vetinari](https://github.com/h-vetinari/)
 * [@mikemhenry](https://github.com/mikemhenry/)
+* [@raimis](https://github.com/raimis/)
 

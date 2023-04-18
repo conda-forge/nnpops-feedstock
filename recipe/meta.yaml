@@ -1,4 +1,4 @@
-{% set version = "0.4" %}
+{% set version = "0.5" %}
 # see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
 {% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
@@ -8,11 +8,7 @@ package:
 
 source:
   url: https://github.com/openmm/NNPOps/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 81857fbb2ce3092243987a5cf2db4cb52352ab2f086d266ddf59edfebf0e92f5
-  patches:
-    # Remove when https://github.com/openmm/NNPOps/pull/88 has been released
-    - 0001-Update-test-tolerance.patch
-    - 0002-Update-the-test-tolerance-again.patch
+  sha256: 1e9d5d631c852593e9e07a17db576187e5e8f50e7ab2c1e6a79b3e77dae06048
 
 build:
   skip: true  # [not linux]
