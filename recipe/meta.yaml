@@ -1,4 +1,4 @@
-{% set version = "0.5" %}
+{% set version = "0.6" %}
 # see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
 {% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
@@ -8,14 +8,14 @@ package:
 
 source:
   url: https://github.com/openmm/NNPOps/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 1e9d5d631c852593e9e07a17db576187e5e8f50e7ab2c1e6a79b3e77dae06048
+  sha256: d7854a3506720aa7536ce64ea9b8d621cad5c024ba4979f2156afcc88b2117a3
 
 build:
   skip: true  # [not linux]
   # as of pytorch 1.13, conda-forge only builds for CUDA 11.2+, see
   # https://github.com/conda-forge/conda-forge-pinning-feedstock/issues/3491
   skip: true  # [cuda_compiler_version not in ("None", "11.2")]
-  number: 2
+  number: 0
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
