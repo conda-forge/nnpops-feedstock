@@ -13,39 +13,8 @@ CMAKE_FLAGS+=" -DTorch_DIR=${SP_DIR}/torch/share/cmake/Torch"
 # adapted from https://github.com/conda-forge/faiss-split-feedstock/blob/main/recipe/build-lib.sh
 declare -a CUDA_CONFIG_ARGS
 if [ ${cuda_compiler_version} != "None" ]; then
-    # the following are all the x86-relevant gpu arches; for building aarch64-packages, add: 53, 62, 72
-    ARCHES=(52 60 61 70)
-    # cuda 11.0 deprecates arches 35, 50
-    DEPRECATED_IN_11=(35 50)
-    if [ $(version2int $cuda_compiler_version) -ge $(version2int "11.1") ]; then
-        # Ampere support for GeForce 30 (sm_86) needs cuda >= 11.1
-        LATEST_ARCH=86
-        # ARCHES does not contain LATEST_ARCH; see usage below
-        ARCHES=( "${ARCHES[@]}" 75 80 )
-    elif [ $(version2int $cuda_compiler_version) -ge $(version2int "11.0") ]; then
-        # Ampere support for A100 (sm_80) needs cuda >= 11.0
-        LATEST_ARCH=80
-        ARCHES=( "${ARCHES[@]}" 75 )
-    elif [ $(version2int $cuda_compiler_version) -ge $(version2int "10.0") ]; then
-        # Turing support (sm_75) needs cuda >= 10.0
-        LATEST_ARCH=75
-        ARCHES=( "${DEPRECATED_IN_11[@]}" "${ARCHES[@]}" )
-    fi
-    for arch in "${ARCHES[@]}"; do
-        CMAKE_CUDA_ARCHS="${CMAKE_CUDA_ARCHS+${CMAKE_CUDA_ARCHS};}${arch}"
-    done
-    # for -real vs. -virtual, see cmake.org/cmake/help/latest/prop_tgt/CUDA_ARCHITECTURES.html
-    # this is to support PTX JIT compilation; see first link above or cf.
-    # devblogs.nvidia.com/cuda-pro-tip-understand-fat-binaries-jit-caching
-    CMAKE_CUDA_ARCHS="${CMAKE_CUDA_ARCHS};${LATEST_ARCH}-real;${LATEST_ARCH}-virtual"
-
-    CUDA_CONFIG_ARGS+=(
-        -DCMAKE_CUDA_ARCHITECTURES="${CMAKE_CUDA_ARCHS}"
-    )
-    ## cmake does not generate output for the call below; echo some info
-    echo "Set up extra cmake-args: CUDA_CONFIG_ARGS=${CUDA_CONFIG_ARGS+"${CUDA_CONFIG_ARGS[@]}"}"
-
-    CMAKE_FLAGS+=" ${CUDA_CONFIG_ARGS}"
+    ARCH_LIST=$(${PYTHON} -c "import torch; print(';'.join([arch.split('_')[1][:1] + '.' + arch.split('_')[1][1:] for arch in torch._C._cuda_getArchFlags().split()]))")
+    CMAKE_FLAGS+=" -DTORCH_CUDA_ARCH_LIST=${ARCH_LIST}"
 else
     CMAKE_FLAGS+=" -DENABLE_CUDA=OFF"
 fi
