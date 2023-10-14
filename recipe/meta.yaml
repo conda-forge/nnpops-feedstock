@@ -9,6 +9,8 @@ package:
 source:
   url: https://github.com/openmm/NNPOps/archive/refs/tags/v{{ version }}.tar.gz
   sha256: d7854a3506720aa7536ce64ea9b8d621cad5c024ba4979f2156afcc88b2117a3
+  patches:
+      - patches/fix-osx-lib-loading.patch  # [osx]
 
 build:
   skip: true  # [not osx]
