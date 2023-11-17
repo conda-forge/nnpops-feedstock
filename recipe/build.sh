@@ -20,6 +20,8 @@ if [ ${cuda_compiler_version} != "None" ]; then
     ARCH_LIST=$(${PYTHON} -c "import torch; print(';'.join([f'{y[0]}.{y[1]}' for y in [x[3:] for x in torch._C._cuda_getArchFlags().split() if x.startswith('sm_')]]))")
     # CMakeLists.txt seems to ignore the CMAKE_CUDA_ARCHITECTURES variable, instead, it is overwritten by TORCH_CUDA_ARCH_LIST
     CMAKE_FLAGS+=" -DTORCH_CUDA_ARCH_LIST=${ARCH_LIST}"
+    # This is required because conda-forge stores cuda headers in a non standard location
+    export CUDA_INC_PATH=$CONDA_PREFIX/$targetsDir/include
 else
     CMAKE_FLAGS+=" -DENABLE_CUDA=OFF"
 fi
