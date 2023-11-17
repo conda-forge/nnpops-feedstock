@@ -17,7 +17,7 @@ source:
   sha256: d7854a3506720aa7536ce64ea9b8d621cad5c024ba4979f2156afcc88b2117a3
   patches:
       - patches/fix-osx-lib-loading.patch  # [osx]
-
+      - patches/cpp17.patch
 build:
   skip: true  # [win]
   number: 5
@@ -62,6 +62,8 @@ requirements:
   run:
     - python
     - torchani >=2.2.4
+    # cuda-version is added here to prevent the conda-forge runner to download a different version during testing, which makes it run out of memory. 
+    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version != 'None']
   run_constrained:
     # additional run constraint to the one from the (version-only) run_export;
     # constraining the CPU builds to CPU pytorch isn't 100% necessary, but cleaner
