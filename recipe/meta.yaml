@@ -28,18 +28,18 @@ build:
 
 requirements:
   build:
+    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != 'None']
-    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')] 
     - sysroot_linux-64  2.17  # [linux64]
     - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     - make
     - cmake
   host:
+    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     - python
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
-    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     - torchani
     - mdtraj
     - pytest
