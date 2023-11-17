@@ -40,13 +40,13 @@ requirements:
     - python
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
-    - torchani
+    - torchani >=2.2.4
     - mdtraj
     - pytest
     - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
   run:
     - python
-    - torchani
+    - torchani >=2.2.4
     # cuda-version is added here to prevent the conda-forge runner to download a different version during testing, which makes it run out of memory. 
     - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
   run_constrained:
