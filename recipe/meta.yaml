@@ -41,6 +41,7 @@ requirements:
     - torchani
     - mdtraj
     - pytest
+    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
   run:
     - python
     - torchani
