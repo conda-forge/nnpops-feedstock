@@ -5,7 +5,7 @@ set -euxo pipefail
 rm -rf build || true
 
 # function for facilitate version comparison; cf. https://stackoverflow.com/a/37939589
-function version2int { echo "$@" | awk -F. '{ printf("%d%02d\n", $1, $2); }'; }
+function majorversion { echo "$@" | awk -F. '{ printf("%d%02d\n", $1); }'; }
 
 CMAKE_FLAGS="${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release -DPython_EXECUTABLE=${PYTHON}"
 CMAKE_FLAGS+=" -DTorch_DIR=${SP_DIR}/torch/share/cmake/Torch"
@@ -20,6 +20,10 @@ if [ ${cuda_compiler_version} != "None" ]; then
     ARCH_LIST=$(${PYTHON} -c "import torch; print(';'.join([f'{y[0]}.{y[1]}' for y in [x[3:] for x in torch._C._cuda_getArchFlags().split() if x.startswith('sm_')]]))")
     # CMakeLists.txt seems to ignore the CMAKE_CUDA_ARCHITECTURES variable, instead, it is overwritten by TORCH_CUDA_ARCH_LIST
     CMAKE_FLAGS+=" -DTORCH_CUDA_ARCH_LIST=${ARCH_LIST}"
+    if [ majorversion ${cuda_compiler_version} -ge 12 ]; then
+	# This is required because conda-forge stores cuda headers in a non standard location
+	export CUDA_INC_PATH=$CONDA_PREFIX/$targetsDir/include
+    fi
 else
     CMAKE_FLAGS+=" -DENABLE_CUDA=OFF"
 fi
