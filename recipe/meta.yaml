@@ -41,7 +41,7 @@ requirements:
     - python
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
-    - torchani
+    - torchani >=2.2.4
     - mdtraj
     - pytest
     - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
@@ -61,7 +61,7 @@ requirements:
     {% endif %}
   run:
     - python
-    - torchani >=2.2.2
+    - torchani >=2.2.4
   run_constrained:
     # additional run constraint to the one from the (version-only) run_export;
     # constraining the CPU builds to CPU pytorch isn't 100% necessary, but cleaner
