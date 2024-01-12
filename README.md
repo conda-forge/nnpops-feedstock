@@ -300,6 +300,3 @@ Feedstock Maintainers
 * [@mikemhenry](https://github.com/mikemhenry/)
 * [@raimis](https://github.com/raimis/)
 
-
-<!-- dummy commit to enable rerendering -->
-
