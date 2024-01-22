@@ -19,7 +19,7 @@ source:
       - patches/fix-osx-lib-loading.patch  # [osx]
       - patches/cpp17.patch
 build:
-  skip: true  # [not osx]
+  skip: true  # [not (osx and arm64)]
   number: 0
   rpaths:
     - lib/
@@ -33,7 +33,6 @@ requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - numpy                                  # [build_platform != target_platform]
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != 'None']
     - sysroot_linux-64  2.17  # [linux64]
@@ -42,7 +41,6 @@ requirements:
     - cmake
   host:
     - python
-    - numpy
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
     - torchani >=2.2.4
