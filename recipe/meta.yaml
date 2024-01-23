@@ -83,12 +83,12 @@ test:
     set +e
     summary=""
     exitcode=0
-    for f in Test*; do
+    for f in Test*.py; do
       if [[ $f == *Cuda* || $f == *OpenCL* ]]; then
         continue
       fi
       echo "Running $f..."
-      ./${f}
+      pytest -v ./${f}
       thisexitcode=$?
       summary+="\n${f}: "
       if [[ $thisexitcode == 0 ]]; then summary+="OK"; else summary+="FAILED"; fi
