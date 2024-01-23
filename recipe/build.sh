@@ -41,7 +41,7 @@ mkdir -p "${TEST_DIR}"
 cp -a test/* "${TEST_DIR}"
 
 if [[ "$target_platform" == osx* ]]; then
-    find . -name 'Test*' -perm +0111 -type f -exec cp {} "${TEST_DIR}" \;
+    find "${TEST_DIR}" -name 'Test*' -perm +0111 -type f;
 else
-    find . -name 'Test*' -executable -type f -exec cp {} "${TEST_DIR}" \;
+    find "${TEST_DIR}" -name 'Test*' -executable -type f;
 fi
