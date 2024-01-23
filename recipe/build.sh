@@ -34,6 +34,14 @@ cmake ${CMAKE_FLAGS} ${SRC_DIR}
 make -j$CPU_COUNT
 make -j$CPU_COUNT install
 
-if [[ "$target_platform" != "osx-arm64" ]]; then
-    CTEST_OUTPUT_ON_FAILURE=1 ctest --verbose --exclude-regex TestCuda
+# Include test executables too
+TEST_DIR="${PREFIX}/share/${PKG_NAME}/tests/"
+
+mkdir -p "${TEST_DIR}"
+cp -a test/* "${TEST_DIR}"
+
+if [[ "$target_platform" == osx* ]]; then
+    find . -name 'Test*' -perm +0111 -type f -exec cp {} "${TEST_DIR}" \;
+else
+    find . -name 'Test*' -executable -type f -exec cp {} "${TEST_DIR}" \;
 fi
