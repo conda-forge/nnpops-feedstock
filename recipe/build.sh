@@ -8,7 +8,7 @@ rm -rf build || true
 function majorversion { echo "$@" | awk -F. '{ printf("%d%02d\n", $1); }'; }
 
 CMAKE_FLAGS="${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release"
-CMAKE_FLAGS+=" -DPython_EXECUTABLE=${PYTHON}"
+CMAKE_FLAGS+=" -DPython3_EXECUTABLE=${PYTHON}"
 CMAKE_FLAGS+=" -DTorch_DIR=${SP_DIR}/torch/share/cmake/Torch"
 
 declare -a CUDA_CONFIG_ARGS
