@@ -7,7 +7,12 @@ rm -rf build || true
 # function for facilitate version comparison; cf. https://stackoverflow.com/a/37939589
 function majorversion { echo "$@" | awk -F. '{ printf("%d%02d\n", $1); }'; }
 
-CMAKE_FLAGS="${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release -DPython_EXECUTABLE=${PYTHON}"
+CMAKE_FLAGS="${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release"
+
+CMAKE_FLAGS+="-DPython3_EXECUTABLE=${PREFIX}/bin/python"
+CMAKE_FLAGS+="-DPython3_FIND_STRATEGY=LOCATION"
+CMAKE_FLAGS+="-DPython3_ROOT_DIR=${PREFIX}"
+
 CMAKE_FLAGS+=" -DTorch_DIR=${SP_DIR}/torch/share/cmake/Torch"
 
 declare -a CUDA_CONFIG_ARGS
