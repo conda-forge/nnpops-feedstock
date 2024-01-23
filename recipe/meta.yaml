@@ -20,8 +20,8 @@ source:
       - patches/fix-osx-lib-loading.patch  # [osx]
       - patches/cpp17.patch
 build:
-  skip: true  # [not (osx)]
-  number: 0
+  skip: true  # [win]
+  number: 6
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
