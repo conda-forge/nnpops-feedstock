@@ -7,7 +7,8 @@ rm -rf build || true
 # function for facilitate version comparison; cf. https://stackoverflow.com/a/37939589
 function majorversion { echo "$@" | awk -F. '{ printf("%d%02d\n", $1); }'; }
 
-CMAKE_FLAGS="${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release -DPython_EXECUTABLE=${PYTHON}"
+CMAKE_FLAGS="${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=${PREFIX} -DCMAKE_BUILD_TYPE=Release"
+CMAKE_FLAGS+=" -DPython3_EXECUTABLE=${PYTHON}"
 CMAKE_FLAGS+=" -DTorch_DIR=${SP_DIR}/torch/share/cmake/Torch"
 
 declare -a CUDA_CONFIG_ARGS
@@ -32,4 +33,15 @@ mkdir build && cd build
 cmake ${CMAKE_FLAGS} ${SRC_DIR}
 make -j$CPU_COUNT
 make -j$CPU_COUNT install
-CTEST_OUTPUT_ON_FAILURE=1 ctest --verbose --exclude-regex TestCuda
+
+# Include test executables too
+TEST_DIR="${PREFIX}/share/${PKG_NAME}/tests/"
+
+mkdir -p "${TEST_DIR}"
+cp -a test/* "${TEST_DIR}"
+
+if [[ "$target_platform" == osx* ]]; then
+    find "${TEST_DIR}" -name 'Test*' -perm +0111 -type f;
+else
+    find "${TEST_DIR}" -name 'Test*' -executable -type f;
+fi
