@@ -58,7 +58,7 @@ requirements:
     - python
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
-#    - cuda-version >={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
+    - cuda-version >={{ cuda_compiler_version }}  # [cuda_major >= 12]
   run:
     - python
     - torchani >=2.2.4
