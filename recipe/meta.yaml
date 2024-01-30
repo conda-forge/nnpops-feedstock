@@ -40,7 +40,6 @@ requirements:
 #    - cuda-version >={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     - make
     - cmake
-    - gxx <12
   host:
     - python
     - pytorch
