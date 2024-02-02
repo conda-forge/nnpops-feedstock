@@ -44,7 +44,7 @@ requirements:
     - python
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
-    - cuda-version {{ cuda_compiler_version }} # [cuda_compiler_version not in (undefined, 'None')]
+    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     {% if cuda_major >= 12 %}
     - cuda-cudart-dev
     # No cuda-driver-dev in windows
