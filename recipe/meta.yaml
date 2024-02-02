@@ -21,7 +21,7 @@ source:
       - patches/cpp17.patch
 build:
   skip: true  # [win]
-  number: 6
+  number: 7
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
@@ -37,14 +37,14 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != 'None']
     - sysroot_linux-64  2.17  # [linux64]
-    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
+    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     - make
     - cmake
   host:
     - python
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
-    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
+    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     {% if cuda_major >= 12 %}
     - cuda-cudart-dev
     # No cuda-driver-dev in windows
@@ -62,8 +62,6 @@ requirements:
   run:
     - python
     - torchani >=2.2.4
-    # cuda-version is added here to prevent the conda-forge runner to download a different version during testing, which makes it run out of memory. 
-    - cuda-version =={{ cuda_compiler_version }}  # [cuda_compiler_version != 'None']
   run_constrained:
     # additional run constraint to the one from the (version-only) run_export;
     # constraining the CPU builds to CPU pytorch isn't 100% necessary, but cleaner
