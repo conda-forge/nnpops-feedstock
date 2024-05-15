@@ -21,6 +21,8 @@ source:
       - patches/cpp17.patch
 build:
   skip: true  # [win]
+  # waiting for https://github.com/conda-forge/torchani-feedstock/pull/27
+  skip: true  # [py>=312]
   number: 8
   rpaths:
     - lib/
