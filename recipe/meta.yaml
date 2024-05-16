@@ -23,7 +23,7 @@ build:
   skip: true  # [win]
   # still uses distutils & pkgutil
   skip: true  # [py>=312]
-  number: 8
+  number: 9
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
