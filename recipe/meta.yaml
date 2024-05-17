@@ -43,7 +43,6 @@ requirements:
   host:
     - python
     - pytorch
-    - setuptools >=69
     - pytorch =*={{ torch_proc_type }}*
     - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     {% if cuda_major >= 12 %}
@@ -62,6 +61,7 @@ requirements:
     {% endif %}
   run:
     - python
+    - setuptools >=69  # [py>=312]
     - torchani >=2.2.4
   run_constrained:
     # additional run constraint to the one from the (version-only) run_export;
