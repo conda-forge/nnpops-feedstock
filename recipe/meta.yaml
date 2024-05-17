@@ -61,7 +61,6 @@ requirements:
     {% endif %}
   run:
     - python
-    - setuptools >=69  # [py>=312]
     - torchani >=2.2.4
   run_constrained:
     # additional run constraint to the one from the (version-only) run_export;
