@@ -21,6 +21,8 @@ source:
       - patches/cpp17.patch
 build:
   skip: true  # [win]
+  # still uses distutils & pkgutil
+  skip: true  # [py>=312]
   number: 8
   rpaths:
     - lib/
