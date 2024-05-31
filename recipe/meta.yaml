@@ -37,7 +37,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != 'None']
-#    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
+    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
     - make
     - cmake
   host:
