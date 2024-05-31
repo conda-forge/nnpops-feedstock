@@ -57,16 +57,14 @@ requirements:
   host:
     - python
     - pytorch =*={{ torch_proc_type }}*
-    - libtorch
-#    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, 'None')]
   run:
     - python
     - torchani
     - cuda-version  # [cuda_compiler_version not in (undefined, 'None')]
-  # run_constrained:
-  #   # additional run constraint to the one from the (version-only) run_export;
-  #   # constraining the CPU builds to CPU pytorch isn't 100% necessary, but cleaner
-  #   - pytorch =*={{ torch_proc_type }}*
+  run_constrained:
+    # additional run constraint to the one from the (version-only) run_export;
+    # constraining the CPU builds to CPU pytorch isn't 100% necessary, but cleaner
+    - pytorch =*={{ torch_proc_type }}*
 
 test:
   requires:
