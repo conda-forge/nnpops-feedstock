@@ -21,7 +21,7 @@ source:
       - patches/cpp17.patch
 build:
   skip: true  # [win]
-  number: 11
+  number: 12
   rpaths:
     - lib/
     - {{ SP_DIR }}/torch/lib
