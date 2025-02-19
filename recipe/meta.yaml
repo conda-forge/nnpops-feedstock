@@ -21,8 +21,6 @@ source:
       - patches/cpp17.patch
 build:
   skip: true  # [win]
-  # pytorch in conda-forge does not support CUDA 11.8 as of v2.5
-  skip: true  # [cuda_compiler_version == "11.8"]
   number: 13
   rpaths:
     - lib/
@@ -58,7 +56,6 @@ requirements:
     - cmake
   host:
     - python
-    - pytorch
     - pytorch =*={{ torch_proc_type }}*
   run:
     - python
