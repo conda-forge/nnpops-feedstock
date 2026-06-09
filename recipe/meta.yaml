@@ -1,5 +1,5 @@
 {% set name = "nnpops" %}
-{% set version = "0.6" %}
+{% set version = "0.7" %}
 # see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
 {% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
@@ -15,7 +15,7 @@ package:
 
 source:
   url: https://github.com/openmm/NNPOps/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: d7854a3506720aa7536ce64ea9b8d621cad5c024ba4979f2156afcc88b2117a3
+  sha256: 993e9b6701e5dd9980df155a4ffb92e4e3c616c35035995d4019b8deebbee773
   patches:
       - patches/fix-osx-lib-loading.patch  # [osx]
       - patches/cpp17.patch
