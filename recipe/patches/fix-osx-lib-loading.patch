@@ -1,18 +1,22 @@
---- a/src/pytorch/__init__.py	(revision d15cb9196e283b6b55f88a93d85232458f64fa18)
-+++ b/src/pytorch/__init__.py	(date 1697288232453)
-@@ -3,8 +3,14 @@
- '''
+diff --git a/src/pytorch/__init__.py b/src/pytorch/__init__.py
+index 430fec2..6114a81 100644
+--- a/src/pytorch/__init__.py
++++ b/src/pytorch/__init__.py
+@@ -4,6 +4,7 @@ High-performance PyTorch operations for neural network potentials
  import os.path
  import torch
+ from importlib.metadata import version, PackageNotFoundError
 +from torch.utils.cpp_extension import IS_WINDOWS, IS_MACOS, LIB_EXT
+ 
+ try:
+     __version__ = version("NNPOps")
+@@ -11,4 +12,8 @@ except PackageNotFoundError:
+     # package is not installed
+     pass
  
 -torch.ops.load_library(os.path.join(os.path.dirname(__file__), 'libNNPOpsPyTorch.so'))
 +# by default torch assumes OSX has a .so ext, so we need to override
 +_LIBRARY_SUFFIX = LIB_EXT if not IS_MACOS else ".dylib"
 +_LIBRARY_PREFIX = '' if IS_WINDOWS else "lib"
 +_LIBRARY_NAME = f'{_LIBRARY_PREFIX}NNPOpsPyTorch{_LIBRARY_SUFFIX}'
-+
 +torch.ops.load_library(os.path.join(os.path.dirname(__file__), _LIBRARY_NAME))
- 
- 
- from NNPOps.OptimizedTorchANI import OptimizedTorchANI

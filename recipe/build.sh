@@ -18,7 +18,7 @@ if [ ${cuda_compiler_version} != "None" ]; then
     # There is a higher level function, called torch.cuda.get_arch_list, but it returns an empty list when there is no GPU available.
     # Should that fail, this could be used instead:
     # $ cuobjdump $(find $CONDA_PREFIX -name "libtorch_cuda.so")  | grep arch | awk '{print $3}' | sort | uniq | sed 's+sm_\([0-9]\)\([0-9]\)+\1.\2+g' | tr '\n' ';'
-    ARCH_LIST=$(${PYTHON} -c "import torch; print(';'.join([f'{y[0]}.{y[1]}' for y in [x[3:] for x in torch._C._cuda_getArchFlags().split() if x.startswith('sm_')]]))")
+    ARCH_LIST=$(${PYTHON} -c "import torch; print(';'.join([f'{y[:-1]}.{y[-1]}' for y in [x[3:] for x in torch._C._cuda_getArchFlags().split() if x.startswith('sm_')]]))")
     # CMakeLists.txt seems to ignore the CMAKE_CUDA_ARCHITECTURES variable, instead, it is overwritten by TORCH_CUDA_ARCH_LIST
     CMAKE_FLAGS+=" -DTORCH_CUDA_ARCH_LIST=${ARCH_LIST}"
     if [ majorversion ${cuda_compiler_version} -ge 12 ]; then
